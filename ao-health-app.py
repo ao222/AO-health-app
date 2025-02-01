@@ -1,82 +1,61 @@
 import streamlit as st
 import sqlite3
 from datetime import datetime
-from google.oauth2 import id_token
-from google.auth.transport import requests
-import os
 
-# --- CONFIGURATION ---
-GOOGLE_CLIENT_ID = st.secrets["google_api_key"]
-ALLOWED_EMAIL = st.secrets["my_email"]
-DB_PATH = st.secrets["db_path"]
+# Using @st.cache_resource ensures that the DB connection
+# is only created once per session on Streamlit Community Cloud.
+@st.cache_resource
+def init_connection():
+    conn = sqlite3.connect('health_data.db')
+    return conn
 
-# --- AUTHENTICATION FUNCTION ---
-def verify_google_oauth(token):
-    try:
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), GOOGLE_CLIENT_ID)
-        if idinfo['email'] == ALLOWED_EMAIL:
-            return True
-    except Exception as e:
-        return False
-    return False
+conn = init_connection()
+c = conn.cursor()
 
-# --- DATABASE SETUP ---
-def init_db():
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    cursor.execute('''CREATE TABLE IF NOT EXISTS health_data (
-                        date TEXT PRIMARY KEY, 
-                        weight REAL, 
-                        sleep_hours REAL, 
-                        water_intake REAL)''')
-    conn.commit()
-    conn.close()
+# Create table if it doesn't exist
+c.execute('''
+    CREATE TABLE IF NOT EXISTS health_data (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date TEXT,
+        mood INTEGER,
+        symptoms TEXT,
+        productivity INTEGER
+    )
+''')
+conn.commit()
 
-# --- SAVE DATA FUNCTION ---
-def save_data(date, weight, sleep_hours, water_intake):
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    cursor.execute('''INSERT OR REPLACE INTO health_data (date, weight, sleep_hours, water_intake) 
-                      VALUES (?, ?, ?, ?)''', (date, weight, sleep_hours, water_intake))
-    conn.commit()
-    conn.close()
+st.title("Health Tracking App")
 
-# --- LOAD DATA FUNCTION ---
-def load_data():
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM health_data ORDER BY date DESC")
-    data = cursor.fetchall()
-    conn.close()
-    return data
+# --- Form to submit data ---
+with st.form("health_form"):
+    st.write("Enter your health info for today:")
 
-# --- STREAMLIT UI ---
-st.title("📊 Personal Health Tracker")
+    # Mood (1-10)
+    mood = st.slider("Mood (1-10)", 1, 10, 5)
+    # Symptoms
+    symptoms = st.text_input("Symptoms")
+    # Productivity (1-10)
+    productivity = st.slider("Productivity (1-10)", 1, 10, 5)
 
-# Google OAuth Token Input
-token = st.text_input("Paste your Google OAuth Token here:", type="password")
-if token and verify_google_oauth(token):
-    st.success("Authentication Successful!")
-    init_db()
+    # Submit button
+    submitted = st.form_submit_button("Save Entry")
+    if submitted:
+        date_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        c.execute("""
+            INSERT INTO health_data (date, mood, symptoms, productivity)
+            VALUES (?, ?, ?, ?)
+        """, (date_str, mood, symptoms, productivity))
+        conn.commit()
+        st.success("Entry saved!")
 
-    # --- Input Form ---
-    st.subheader("Log Your Health Data")
-    date = st.date_input("Date", datetime.today()).strftime('%Y-%m-%d')
-    weight = st.number_input("Weight (kg)", min_value=0.0, step=0.1)
-    sleep_hours = st.number_input("Sleep Hours", min_value=0.0, step=0.1)
-    water_intake = st.number_input("Water Intake (L)", min_value=0.0, step=0.1)
+st.write("---")
 
-    if st.button("Save Data"):
-        save_data(date, weight, sleep_hours, water_intake)
-        st.success("Data Saved!")
+# --- Display saved data ---
+st.subheader("Previous Entries")
+c.execute("SELECT date, mood, symptoms, productivity FROM health_data ORDER BY id DESC")
+rows = c.fetchall()
 
-    # --- Display Data ---
-    st.subheader("Your Health Data")
-    data = load_data()
-    if data:
-        st.write("### Data Table")
-        st.dataframe(data, columns=["Date", "Weight (kg)", "Sleep Hours", "Water Intake (L)"])
-    else:
-        st.write("No data available yet.")
+if not rows:
+    st.write("No entries yet. Add an entry above.")
 else:
-    st.warning("Please authenticate using Google OAuth token.")
+    st.table(rows)
