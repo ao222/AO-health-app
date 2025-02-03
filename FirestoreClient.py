@@ -37,7 +37,7 @@ class FirestoreClient:
             firebase_admin.initialize_app(cred)
             
             # Initialize Firestore client
-            st.session_state.db = firestore.client()
+            st.session_state.db = firestore.client(database_id="ao-health-data")
 
         self.db = st.session_state.db
 
