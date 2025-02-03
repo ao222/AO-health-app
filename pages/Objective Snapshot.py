@@ -8,7 +8,7 @@ if not firebase_admin._apps:
     cred = credentials.Certificate(dict(st.secrets["firebase"]))
     firebase_admin.initialize_app(cred)
 
-db = firestore.client(database_id="ao-health-data")
+db = firestore.client(database="ao-health-data")
 
 st.title("Health Data Logger")
 st.write("Enter your health metrics below:")
