@@ -37,10 +37,10 @@ def init_firestore_client():
     db = firestore.client(database_id="ao-health-data")
     return db
 
-def query_db(db,start_date,end_date):
+def query_db(db,start_date_stamp,end_date_stamp):
     # Query Firestore
     objective_snapshot_ref = db.collection("users").document("user_123").collection("objectives")
-    query = objective_snapshot_ref.where("timestamp", ">=", start_timestamp).where("timestamp", "<=", end_timestamp)
+    query = objective_snapshot_ref.where("timestamp", ">=", start_date_stamp).where("timestamp", "<=", end_date_stamp)
     docs = query.stream()
 
     # Process results
