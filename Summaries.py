@@ -18,7 +18,7 @@ def main():
         objective_df = db_client.get_all_objective_snapshots()
         
         # Display results
-        if data:
+        if objective_df:
             st.dataframe(objective_df)
         else:
             st.write("No blood pressure data found in the selected range.")
