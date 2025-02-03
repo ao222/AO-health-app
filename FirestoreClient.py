@@ -84,21 +84,21 @@ class FirestoreClient:
   
     """
     def get_collection(self, collection_path: str):
-        """Returns a reference to a Firestore collection."""
+        #Returns a reference to a Firestore collection.
         return self.db.collection(collection_path)
 
     def get_document(self, collection_path: str, document_id: str):
-        """Returns a reference to a specific document."""
+        #Returns a reference to a specific document.
         return self.db.collection(collection_path).document(document_id)
 
     def query_collection(self, collection_path: str, field: str, operator: str, value):
-        """Query a collection based on specific conditions."""
+        #Query a collection based on specific conditions.
         collection_ref = self.db.collection(collection_path)
         query = collection_ref.where(field, operator, value)
         return query.get()
 
     def get_all_documents(self, collection_path: str):
-        """Get all documents from a collection."""
+        #Get all documents from a collection.
         collection_ref = self.db.collection(collection_path)
         return collection_ref.get()
     """
