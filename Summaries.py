@@ -40,7 +40,8 @@ def init_firestore_client():
 def query_db(db,start_date_stamp,end_date_stamp):
     # Query Firestore
     objective_snapshot_ref = db.collection("users").document("user_123").collection("objectives")
-    query = objective_snapshot_ref.where("timestamp", ">=", start_date_stamp).where("timestamp", "<=", end_date_stamp)
+    # query = objective_snapshot_ref.where("timestamp", ">=", start_date_stamp).where("timestamp", "<=", end_date_stamp)
+    query = objective_snapshot_ref.get()
     docs = query.stream()
 
     # Process results
