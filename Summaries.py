@@ -12,19 +12,19 @@ def main():
     end_date = st.date_input("End Date", datetime.today())
 
     if st.button("Query Data"):
-    # Convert dates to timestamps
-    start_timestamp = datetime.combine(start_date, datetime.min.time())
-    end_timestamp = datetime.combine(end_date, datetime.max.time())
-
-    db_client = init_firestore_client()
-    data = query_db(db_client,start_timestamp,end_timestamp)
+        # Convert dates to timestamps
+        start_timestamp = datetime.combine(start_date, datetime.min.time())
+        end_timestamp = datetime.combine(end_date, datetime.max.time())
     
-    # Display results
-    if data:
-        df = pd.DataFrame(data)
-        st.dataframe(df)
-    else:
-        st.write("No blood pressure data found in the selected range.")
+        db_client = init_firestore_client()
+        data = query_db(db_client,start_timestamp,end_timestamp)
+        
+        # Display results
+        if data:
+            df = pd.DataFrame(data)
+            st.dataframe(df)
+        else:
+            st.write("No blood pressure data found in the selected range.")
 
 
 def init_firestore_client():
@@ -54,6 +54,7 @@ def query_db(db,start_date,end_date):
             "Glucose": doc_data.get("glucose"),
             "Timestamp": doc_data.get("timestamp").strftime("%Y-%m-%d %H:%M:%S")
         })
+    return data
 
 if __name__ == "__main__":
     main()
