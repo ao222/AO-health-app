@@ -4,6 +4,7 @@ import pandas as pd
 from datetime import datetime
 
 def main():
+    db_client = FirestoreClient()
     st.title("Blood Pressure Data")
     
     # Date range selection
@@ -14,8 +15,6 @@ def main():
         # Convert dates to timestamps
         start_timestamp = datetime.combine(start_date, datetime.min.time())
         end_timestamp = datetime.combine(end_date, datetime.max.time())
-    
-        db_client = FirestoreClient()
         objective_df = db_client.get_all_objective_snapshots()
         
         # Display results
