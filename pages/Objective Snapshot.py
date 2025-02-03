@@ -1,14 +1,7 @@
 import streamlit as st
-import firebase_admin
-from firebase_admin import credentials, firestore
-import datetime
+from ../FirestoreClient import FirestoreClient
 
-# Initialize Firebase using st.secrets
-if not firebase_admin._apps:
-    cred = credentials.Certificate(dict(st.secrets["firebase"]))
-    firebase_admin.initialize_app(cred)
-
-db = firestore.client(database_id="ao-health-data")
+db_client = FirestoreClient()
 
 st.title("Health Data Logger")
 st.write("Enter your health metrics below:")
@@ -22,16 +15,5 @@ with st.form("health_form"):
     submit = st.form_submit_button("Submit")
 
 if submit:
-    user_id = "user_123"  # Replace with dynamic user auth if needed
-    timestamp = datetime.datetime.utcnow().isoformat()
-    data = {
-        "systolic": systolic,
-        "diastolic": diastolic,
-        "heart_rate": heart_rate,
-        "glucose": glucose,
-        "timestamp": timestamp
-    }
-    
-    # Save data to Firestore
-    db.collection("users").document(user_id).collection("objectives").document(timestamp).set(data)
+    db_client.save_objective_snapshot(systolic,diastolic,heart_rate,glucose)
     st.success("Data successfully saved!")
