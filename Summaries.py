@@ -53,7 +53,7 @@ def query_db(db,start_date_stamp,end_date_stamp):
             "Diastolic": doc_data.get("diastolic"),
             "HeartRate": doc_data.get("heart_rate"),
             "Glucose": doc_data.get("glucose"),
-            "Timestamp": doc_data.get("timestamp").strftime("%Y-%m-%d %H:%M:%S")
+            "Timestamp": doc_data.get("timestamp")
         })
     return data
 
