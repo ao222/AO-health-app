@@ -43,7 +43,7 @@ class FirestoreClient:
 
         self.db = st.session_state.db
 
-    def save_objective_snapshot(systolic,diastolic,heart_rate,glucose):
+    def save_objective_snapshot(self,systolic,diastolic,heart_rate,glucose):
         user_id = "user_123"  # Replace with dynamic user auth if needed
         timestamp = datetime.datetime.utcnow().isoformat()
         data = {
@@ -57,7 +57,7 @@ class FirestoreClient:
         # Save data to Firestore
         self.db.collection("users").document(user_id).collection("objectives").document(timestamp).set(data)
 
-    def get_all_objective_snapshots():
+    def get_all_objective_snapshots(self):
         objective_snapshot_ref = self.db.collection("users").document("user_123").collection("objectives")
 
         # buggy code that tries to limit objectives to a timestamp range (doesn't work yet)
