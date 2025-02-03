@@ -1,5 +1,5 @@
 import streamlit as st
-from ../FirestoreClient import FirestoreClient
+from ..FirestoreClient import FirestoreClient
 
 db_client = FirestoreClient()
 
