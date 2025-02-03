@@ -42,11 +42,11 @@ def query_db(db,start_date_stamp,end_date_stamp):
     objective_snapshot_ref = db.collection("users").document("user_123").collection("objectives")
     # query = objective_snapshot_ref.where("timestamp", ">=", start_date_stamp).where("timestamp", "<=", end_date_stamp)
     query = objective_snapshot_ref.get()
-    docs = query.stream()
+    # docs = query.stream()
 
     # Process results
     data = []
-    for doc in docs:
+    for doc in query:
         doc_data = doc.to_dict()
         data.append({
             "Systolic": doc_data.get("systolic"),
