@@ -79,7 +79,8 @@ class FirestoreClient:
         if data:
             df = pd.DataFrame(data)
             return df
-        else return None
+        else:
+            return None
   
     """
     def get_collection(self, collection_path: str):
