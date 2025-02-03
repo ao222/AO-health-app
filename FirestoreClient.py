@@ -34,8 +34,9 @@ class FirestoreClient:
         """Authenticate to Firestore only if not already authenticated."""
         if "db" not in st.session_state:
             # Initialize Firebase Admin SDK
-            cred = credentials.Certificate(dict(st.secrets["firebase"]))
-            firebase_admin.initialize_app(cred)
+            if not firebase_admin._apps:  # Check if Firebase app has been initialized
+                cred = credentials.Certificate(dict(st.secrets["firebase"]))
+                firebase_admin.initialize_app(cred)
             
             # Initialize Firestore client
             st.session_state.db = firestore.client(database_id="ao-health-data")
