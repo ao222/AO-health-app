@@ -4,26 +4,26 @@ from datetime import datetime, timedelta
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-"""
-    credentials obtained through the streamlit community
-    st secrets toml file. The toml file must have a [firebase]
-    section formatted as follows:
+
+#    credentials obtained through the streamlit community
+#    st secrets toml file. The toml file must have a [firebase]
+#    section formatted as follows:
     
-    [firebase]
-    type = "service_account"
-    project_id = "XXX"
-    private_key_id = "XXX"
-    private_key = "XXX"
-    client_email = "XXX"
-    client_id = "XXX"
-    auth_uri = "https://accounts.google.com/o/oauth2/auth"
-    token_uri = "https://oauth2.googleapis.com/token"
-    auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
-    client_x509_cert_url = "XXX"
+#    [firebase]
+#    type = "service_account"
+#    project_id = "XXX"
+#    private_key_id = "XXX"
+#    private_key = "XXX"
+#    client_email = "XXX"
+#    client_id = "XXX"
+#    auth_uri = "https://accounts.google.com/o/oauth2/auth"
+#    token_uri = "https://oauth2.googleapis.com/token"
+#    auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
+#    client_x509_cert_url = "XXX"
     
-    The values may be obtained through creating a json credentials file
-    from the firestore console.
-"""
+#    The values may be obtained through creating a json credentials file
+#    from the firestore console.
+
 
 class FirestoreClient:
     def __init__(self):
