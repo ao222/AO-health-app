@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(page_title="AO Health Tracker", page_icon="💙")
+
 # Streamlit UI
 st.title("Subjective Snapshot")
 
