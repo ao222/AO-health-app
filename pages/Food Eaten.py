@@ -21,9 +21,7 @@ with st.form("dynamic_form"):
         if col3.button("❌", key=f"remove_{i}"):
             remove_field(i)
         new_fields.append((text_value, number_value))
-    
     st.session_state.fields = new_fields
-    
     st.form_submit_button("Submit")
     
 if st.button("+ Add Another Field"):
