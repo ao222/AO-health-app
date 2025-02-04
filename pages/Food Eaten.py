@@ -1,18 +1,29 @@
 import streamlit as st
 import pandas as pd
 
-st.title("Editable Table")
+# Initialize session state to store submitted data
+if 'data' not in st.session_state:
+    st.session_state.data = []
 
-# Initialize session state
-if "table_data" not in st.session_state:
-    st.session_state.table_data = pd.DataFrame({"Label": [""], "Value": [0]})
+st.title("Streamlit Form with Table")
 
-# Editable table
-edited_df = st.data_editor(st.session_state.table_data, num_rows="dynamic", key="table_editor")
+# Create a form with a single row for text and number input
+with st.form("entry_form"):
+    col1, col2 = st.columns([2, 1])  # Adjust column width ratio as needed
+    with col1:
+        text_input = st.text_input("Enter text:", key="text_input")
+    with col2:
+        number_input = st.number_input("Enter number:", step=1, key="number_input")
+    submit_button = st.form_submit_button("Submit")
 
-# Update session state with edited data
-st.session_state.table_data = edited_df
+# Process the form submission
+if submit_button:
+    if text_input and number_input is not None:
+        st.session_state.data.append({"Text": text_input, "Number": number_input})
+        st.experimental_rerun()  # Rerun app to update the table
 
-# Submit button
-if st.button("Submit"):
-    st.write("Submitted Data:", st.session_state.table_data)
+# Display the stored data as a table
+if st.session_state.data:
+    df = pd.DataFrame(st.session_state.data)
+    st.write("### Submitted Data")
+    st.dataframe(df, use_container_width=True)
