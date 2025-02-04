@@ -50,7 +50,7 @@ class FirestoreClient:
         
         data = {
             "description": description,
-            "calories": calories
+            "calories": calories,
             "timestamp": timestamp
         }
 
