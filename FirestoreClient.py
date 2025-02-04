@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import datetime
+from datetime import datetime, timedelta
 import firebase_admin
 from firebase_admin import credentials, firestore
 
@@ -82,7 +82,42 @@ class FirestoreClient:
             return df
         else:
             return None
-  
+            
+    def get_objective_snapshots(self,from_timestamp, to_timestamp):
+        start_time_str = from_timestamp.isoformat()
+        end_times_str = to_timestamp.isoformat()
+
+        # Reference Firestore objectives collection
+        objective_snapshot_ref = self.db.collection("users").document("user_123").collection("objectives")
+        
+        # Query Firestore using document IDs (which are ISO formatted timestamps)
+        query = (
+            collection_ref
+            .order_by("__name__")  # Query based on document ID
+            .start_at([start_time_str])  # Start at documents created at or after start_time
+            .end_at([end_time_str])  # End at documents created at or before end_time
+        )
+        
+        # Execute query and fetch documents
+        docs = query.stream()
+        
+        # Process results
+        data = []
+        for doc in docs:
+            doc_data = doc.to_dict()
+            data.append({
+                "Systolic": doc_data.get("systolic"),
+                "Diastolic": doc_data.get("diastolic"),
+                "HeartRate": doc_data.get("heart_rate"),
+                "Glucose": doc_data.get("glucose"),
+                "Timestamp": doc_data.get("timestamp")
+            })
+
+        if data:
+            df = pd.DataFrame(data)
+            return df
+        else:
+            return None
     """
     def get_collection(self, collection_path: str):
         #Returns a reference to a Firestore collection.
