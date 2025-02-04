@@ -144,6 +144,7 @@ class FirestoreClient:
             return None
             
     def get_today_food_snapshots(self):
+        user_id = "user_123"
         today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
 
         # Reference Firestore
