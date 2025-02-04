@@ -2,17 +2,6 @@ import streamlit as st
 from datetime import datetime
 from FirestoreClient import FirestoreClient
 
-"""
-data = {
-            "date": today,
-            "sleep_hours": sleep_hours,
-            "naps": naps,
-            "walking_minutes": walking_minutes,
-            "lifting_minutes": lifting_minutes,
-            "calories": calories
-        }
-"""
-
 # Streamlit UI
 st.title("Daily Snapshot")
 
