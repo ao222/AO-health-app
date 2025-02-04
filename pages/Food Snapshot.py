@@ -25,7 +25,7 @@ food_today_df = db_client.get_today_food_snapshots()
 
 # Display results
 if food_today_df is not None:
-    st.dataframe(food_today_df)
+    st.markdown(food_today_df.to_markdown())
 else:
     st.write("No food snapshot data found for today.")
 
