@@ -3,6 +3,7 @@ from datetime import datetime
 from FirestoreClient import FirestoreClient
 
 # Streamlit UI
+st.set_page_config(page_title="AO Health Tracker", page_icon="💙")
 formatted_date = datetime.now().strftime("%A, %B %-d, %Y")
 st.title("Daily Snapshot")
 st.subheader(formatted_date)
