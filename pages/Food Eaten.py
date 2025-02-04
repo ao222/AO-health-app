@@ -1,33 +1,17 @@
 import streamlit as st
 
-st.title("Dynamic Form")
-    
-if "fields" not in st.session_state:
-    st.session_state.fields = [("", 0)]
+st.title("Editable Table")
 
-def add_field():
-    st.session_state.fields.append(("", 0))
+    # Initialize session state
+    if "table_data" not in st.session_state:
+        st.session_state.table_data = pd.DataFrame({"Label": [""], "Value": [0]})
 
-def remove_field(index):
-    if len(st.session_state.fields) > 1:
-        st.session_state.fields.pop(index)
+    # Editable table
+    edited_df = st.data_editor(st.session_state.table_data, num_rows="dynamic", key="table_editor")
 
-new_fields = []
-for i, (text, number) in enumerate(st.session_state.fields):
-    col1, col2, col3 = st.columns([3, 1, 0.5])  # Adjust column ratios
-    text_value = col1.text_input(f"Label {i+1}", value=text, key=f"text_{i}")
-    number_value = col2.number_input(f"Value {i+1}", value=number, key=f"num_{i}")
-    
-    # Use a unique key for each remove button and handle removal outside the form
-    if col3.button("❌", key=f"remove_{i}"):
-        remove_field(i)
-    
-    new_fields.append((text_value, number_value))
+    # Update session state with edited data
+    st.session_state.table_data = edited_df
 
-st.session_state.fields = new_fields
-
-with st.form("dynamic_form"):
-    st.form_submit_button("Submit")
-    
-if st.button("+ Add Another Field"):
-    add_field()
+    # Submit button
+    if st.button("Submit"):
+        st.write("Submitted Data:", st.session_state.table_data)
