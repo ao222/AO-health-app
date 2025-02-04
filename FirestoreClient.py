@@ -43,6 +43,26 @@ class FirestoreClient:
 
         self.db = st.session_state.db
 
+    def save_subjective_snapshot(motivation, restfulness, irritability, social_energy, levity, productivity, appetite, psychosis, depression, mania):
+        user_id = "user_123"
+        timestamp = datetime.utcnow().isoformat()
+        data = {
+            "motivation": motivation,
+            "restfulness": restfulness,
+            "irritability": irritability,
+            "social_energy": social_energy,
+            "levity": levity,
+            "productivity": productivity,
+            "appetite": appetite,
+            "psychosis": psychosis,
+            "depression": depression,
+            "mania": mania,
+            "timestamp": timestamp
+        }
+
+        # Save data to Firestore
+        self.db.collection("users").document(user_id).collection("subjectives").document(timestamp).set(data)
+    
     def save_objective_snapshot(self,systolic,diastolic,heart_rate,glucose):
         user_id = "user_123"  # Replace with dynamic user auth if needed
         timestamp = datetime.utcnow().isoformat()
