@@ -71,7 +71,22 @@ class FirestoreClient:
 
         # Save data to Firestore
         self.db.collection("users").document(user_id).collection("dailies").document(today).set(data)
-        
+
+    from datetime import datetime
+
+    def get_daily_snapshot(self):
+        user_id = "user_123"
+        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+    
+        # Retrieve data from Firestore
+        doc_ref = self.db.collection("users").document(user_id).collection("dailies").document(today)
+        doc = doc_ref.get()
+    
+        if doc.exists:
+            return doc.to_dict()
+        else:
+            return None  # or an appropriate response indicating no data found
+
     def get_all_objective_snapshots(self):
         objective_snapshot_ref = self.db.collection("users").document("user_123").collection("objectives")
 
