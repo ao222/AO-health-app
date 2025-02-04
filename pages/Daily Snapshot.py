@@ -12,7 +12,6 @@ db_client = FirestoreClient()
 data = db_client.get_daily_snapshot()
 
 with st.form("daily_snapshot"):
-    date = st.date_input("Date", value=datetime.today().date())
     sleep_hours = st.number_input("Sleep (hours)", min_value=0.0, max_value=24.0, step=0.5, value=data["sleep_hours"])
     naps = st.number_input("Naps (hours)", min_value=0.0, max_value=24.0, step=0.25, value=data["naps"])
     walking_minutes = st.number_input("Walking (minutes)", min_value=0, step=5, value=data["walking_minutes"])
