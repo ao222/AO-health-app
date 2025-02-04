@@ -1,29 +1,61 @@
 import streamlit as st
 import pandas as pd
 
-# Initialize session state to store submitted data
-if 'data' not in st.session_state:
-    st.session_state.data = []
+with tab_df:
+    st.write('# Solution using a dataframe')
 
-st.title("Streamlit Form with Table")
+    # Create an empty dataframe on first page load, will skip on page reloads
+    if 'data' not in st.session_state:
+        data = pd.DataFrame({'col1':[],'col2':[],'col3':[],'col4':[]})
+        st.session_state.data = data
 
-# Create a form with a single row for text and number input
-with st.form("entry_form"):
-    col1, col2 = st.columns([2, 1])  # Adjust column width ratio as needed
-    with col1:
-        text_input = st.text_input("Enter text:", key="text_input")
-    with col2:
-        number_input = st.number_input("Enter number:", step=1, key="number_input")
-    submit_button = st.form_submit_button("Submit")
+    # Show current data
+    st.dataframe(st.session_state.data)
 
-# Process the form submission
-if submit_button:
-    if text_input and number_input is not None:
-        st.session_state.data.append({"Text": text_input, "Number": number_input})
-        st.experimental_rerun()  # Rerun app to update the table
+    st.write('#### Using form submission')
 
-# Display the stored data as a table
-if st.session_state.data:
-    df = pd.DataFrame(st.session_state.data)
-    st.write("### Submitted Data")
-    st.dataframe(df, use_container_width=True)
+    # Function to append inputs from form into dataframe
+    def add_dfForm():
+        row = pd.DataFrame({'col1':[st.session_state.input_df_form_col1],
+                'col2':[st.session_state.input_df_form_col2],
+                'col3':[st.session_state.input_df_form_col3],
+                'col4':[st.session_state.input_df_form_col2-st.session_state.input_df_form_col3]})
+        st.session_state.data = pd.concat([st.session_state.data, row])
+
+    # Inputs listed within a form
+    dfForm = st.form(key='dfForm', clear_on_submit=True)
+    with dfForm:
+        dfFormColumns = st.columns(4)
+        with dfFormColumns[0]:
+            st.text_input('col1', key='input_df_form_col1')
+        with dfFormColumns[1]:
+            st.number_input('col2', step=1, key='input_df_form_col2')
+        with dfFormColumns[2]:
+            st.number_input('col3', step=1, key='input_df_form_col3')
+        with dfFormColumns[3]:
+            pass
+        st.form_submit_button(on_click=add_dfForm)
+
+    st.write('#### Not using form submission')
+
+    # Function to append non-form inputs into dataframe
+    def add_df():
+        row = pd.DataFrame({'col1':[st.session_state.input_df_col1],
+                'col2':[st.session_state.input_df_col2],
+                'col3':[st.session_state.input_df_col3],
+                'col4':[st.session_state.input_df_col2-st.session_state.input_df_col3]})
+        st.session_state.data = pd.concat([st.session_state.data, row])
+
+    # Inputs created outside of a form (allows computing col4 for preview)
+    dfColumns = st.columns(4)
+    with dfColumns[0]:
+        st.text_input('col1', key='input_df_col1')
+    with dfColumns[1]:
+        st.number_input('col2', step=1, key='input_df_col2')
+    with dfColumns[2]:
+        st.number_input('col3', step=1, key='input_df_col3')
+    with dfColumns[3]:
+        st.number_input('col4', step=1, key='input_df_col4', 
+                        value = st.session_state.input_df_col2-st.session_state.input_df_col3, 
+                        disabled=True)
+    st.button('Submit', on_click=add_df)
