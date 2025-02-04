@@ -18,5 +18,5 @@ with st.form("input_form"):
     submit_button = st.form_submit_button("Submit")
 
 if submit_button:
-    db_client.save_foods_snapshot(description,calories)
+    db_client.save_food_snapshot(description,calories)
     
