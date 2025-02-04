@@ -15,7 +15,7 @@ def main():
         # Convert dates to timestamps
         start_timestamp = datetime.combine(start_date, datetime.min.time())
         end_timestamp = datetime.combine(end_date, datetime.max.time())
-        objective_df = db_client.get_all_objective_snapshots()
+        objective_df = db_client.get_objective_snapshots(start_timestamp,end_timestamp)
         
         # Display results
         if objective_df is not None:
