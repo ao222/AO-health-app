@@ -43,7 +43,7 @@ class FirestoreClient:
 
         self.db = st.session_state.db
 
-    def save_subjective_snapshot(motivation, restfulness, irritability, social_energy, levity, productivity, appetite, psychosis, depression, mania):
+    def save_subjective_snapshot(self, motivation, restfulness, irritability, social_energy, levity, productivity, appetite, psychosis, depression, mania):
         user_id = "user_123"
         timestamp = datetime.utcnow().isoformat()
         data = {
