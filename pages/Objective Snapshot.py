@@ -2,6 +2,7 @@ import streamlit as st
 from FirestoreClient import FirestoreClient
 
 db_client = FirestoreClient()
+st.set_page_config(page_title="AO Health Tracker", page_icon="💙")
 
 st.title("Health Data Logger")
 st.write("Enter your health metrics below:")
