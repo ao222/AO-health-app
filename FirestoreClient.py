@@ -57,7 +57,7 @@ class FirestoreClient:
         # Save data to Firestore
         self.db.collection("users").document(user_id).collection("objectives").document(timestamp).set(data)
 
-    def save_daily_snapshot(self, date, sleep_hours, naps, walking_minutes, lifting_minutes, calories):
+    def save_daily_snapshot(self, sleep_hours, naps, walking_minutes, lifting_minutes, calories):
         user_id = "user_123"
         today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
         data = {
