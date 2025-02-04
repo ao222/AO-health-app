@@ -151,7 +151,7 @@ class FirestoreClient:
         today_ref = self.db.collection("users").document(user_id).collection("foods").document(today).collection("snapshots")
 
         # Query
-        query = objective_snapshot_ref.get()
+        query = today_ref.get()
 
         # Process Results
         data = []
