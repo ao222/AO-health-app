@@ -55,20 +55,6 @@ class FirestoreClient:
 
         # Save data to Firestore
         self.db.collection("users").document(user_id).collection("foods").document(today).collection("snapshots").document(timestamp).set(data)
-
-#    user_id = "user_123"
-#        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
-#        data = {
-#            "date": today,
-#            "sleep_hours": sleep_hours,
-#            "naps": naps,
-#            "walking_minutes": walking_minutes,
-#            "lifting_minutes": lifting_minutes,
-#            "calories": calories
-#        }
-
-#        # Save data to Firestore
-#        self.db.collection("users").document(user_id).collection("dailies").document(today).set(data)
     
     def save_subjective_snapshot(self, motivation, restfulness, irritability, social_energy, levity, productivity, appetite, psychosis, depression, mania):
         user_id = "user_123"
