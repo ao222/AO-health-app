@@ -22,7 +22,12 @@ if submit_button:
     
 st.subheader("Today's Eats")
 food_today_df = db_client.get_today_food_snapshots()
-st.dataframe(food_today_df)
+
+# Display results
+if food_today_df is not None:
+    st.dataframe(food_today_df)
+else:
+    st.write("No food snapshot data found for today.")
 """
 import streamlit as st
 
