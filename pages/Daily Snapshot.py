@@ -22,5 +22,5 @@ with st.form("daily_snapshot"):
     submitted = st.form_submit_button("Submit")
     
     if submitted:
-        db_client.save_daily_snapshot(date, sleep_hours, naps, walking_minutes, lifting_minutes, calories)
+        db_client.save_daily_snapshot(sleep_hours, naps, walking_minutes, lifting_minutes, calories)
         st.success("Data saved successfully!")
