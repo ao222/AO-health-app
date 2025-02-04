@@ -45,7 +45,7 @@ class FirestoreClient:
 
     def save_objective_snapshot(self,systolic,diastolic,heart_rate,glucose):
         user_id = "user_123"  # Replace with dynamic user auth if needed
-        timestamp = datetime.datetime.utcnow().isoformat()
+        timestamp = datetime.utcnow().isoformat()
         data = {
             "systolic": systolic,
             "diastolic": diastolic,
