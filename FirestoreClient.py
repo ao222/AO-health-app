@@ -51,6 +51,7 @@ class FirestoreClient:
         data = {
             "description": description,
             "calories": calories
+            "timestamp": timestamp
         }
 
         # Save data to Firestore
@@ -122,10 +123,6 @@ class FirestoreClient:
 
     def get_all_objective_snapshots(self):
         objective_snapshot_ref = self.db.collection("users").document("user_123").collection("objectives")
-
-        # buggy code that tries to limit objectives to a timestamp range (doesn't work yet)
-        # query = objective_snapshot_ref.where("timestamp", ">=", start_date_stamp).where("timestamp", "<=", end_date_stamp)
-    
         query = objective_snapshot_ref.get()
         
         # Process results
@@ -146,6 +143,31 @@ class FirestoreClient:
         else:
             return None
             
+    def get_today_food_snapshots(self):
+        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+
+        # Reference Firestore
+        today_ref = self.db.collection("users").document(user_id).collection("foods").document(today).collection("snapshots")
+
+        # Query
+        query = objective_snapshot_ref.get()
+
+        # Process Results
+        data = []
+        for doc in query:
+            doc_data = doc.to_dict()
+            data.append({
+                "timestamp": doc_data.get("timestamp"),
+                "description": doc_data.get("description"),
+                "calories": doc_data.get("calories")
+            })
+
+        if data:
+            df = pd.DataFrame(data)
+            return df
+        else:
+            return None
+        
     def get_objective_snapshots(self,from_timestamp, to_timestamp):
         start_time_str = from_timestamp.isoformat()
         end_time_str = to_timestamp.isoformat()
