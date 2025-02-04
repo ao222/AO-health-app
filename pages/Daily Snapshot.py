@@ -4,7 +4,8 @@ from FirestoreClient import FirestoreClient
 
 # Streamlit UI
 formatted_date = datetime.now().strftime("%A, %B %-d, %Y")
-st.title("Daily Snapshot " + formatted_date)
+st.title("Daily Snapshot")
+st.subheader(formatted_date)
 
 db_client = FirestoreClient()
 
