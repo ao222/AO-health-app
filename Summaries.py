@@ -4,6 +4,7 @@ import pandas as pd
 from datetime import datetime
 
 def main():
+    st.set_page_config(page_title="AO Health Tracker", page_icon="💙")
     db_client = FirestoreClient()
     st.title("Blood Pressure Data")
     
