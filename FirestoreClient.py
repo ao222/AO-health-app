@@ -91,7 +91,7 @@ class FirestoreClient:
         # Save data to Firestore
         self.db.collection("users").document(user_id).collection("objectives").document(timestamp).set(data)
 
-    def save_daily_snapshot(self, sleep_hours, naps, walking_minutes, lifting_minutes, calories):
+    def save_daily_snapshot(self, sleep_hours, naps, walking_minutes, lifting_minutes, calories, caffeine):
         user_id = "user_123"
         today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
         data = {
@@ -100,7 +100,8 @@ class FirestoreClient:
             "naps": naps,
             "walking_minutes": walking_minutes,
             "lifting_minutes": lifting_minutes,
-            "calories": calories
+            "calories": calories,
+            "caffeine": caffeine
         }
 
         # Save data to Firestore
@@ -119,7 +120,7 @@ class FirestoreClient:
         if doc.exists:
             return doc.to_dict()
         else:
-            return None  # or an appropriate response indicating no data found
+            return None
 
     def get_all_objective_snapshots(self):
         objective_snapshot_ref = self.db.collection("users").document("user_123").collection("objectives")
