@@ -36,4 +36,4 @@ with st.form(key='my_form'):
 
 # Handle form submission
 if clear_button:
-    st.write(f'tiemstamp submitted: {food_today_df.iloc[line_number,1]}')
+    st.write(f'tiemstamp submitted: {food_today_df.iloc[line_number,0]}')
