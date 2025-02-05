@@ -36,4 +36,10 @@ with st.form(key='my_form'):
 
 # Handle form submission
 if clear_button:
-    st.write(f'tiemstamp submitted: {food_today_df.iloc[line_number,0]}')
+    try:
+        delete_timestamp = food_today_df.iloc[line_number, 0]
+    except IndexError:
+        delete_timestamp = None
+
+    if delete_timestamp is not None:
+        db_client.delete_food_item(delete_timestamp)
