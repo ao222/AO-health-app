@@ -169,6 +169,23 @@ class FirestoreClient:
             return df
         else:
             return None
+
+    def delete_food_item(self, timestamp, day = None):
+        user_id = "user_123"
+
+        # if day is None set to today
+        if day is None:
+            day = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+            
+        # Reference Firestore
+        doc_ref = db.collection("users")\
+                .document(user_id)\
+                .collection("foods")\
+                .document(day)\
+                .collection("snapshots")\
+                .document(timestamp)
+
+        doc_ref.delete()
         
     def get_objective_snapshots(self,from_timestamp, to_timestamp):
         start_time_str = from_timestamp.isoformat()
