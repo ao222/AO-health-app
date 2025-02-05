@@ -43,4 +43,4 @@ if clear_button:
 
     if delete_timestamp is not None:
         db_client.delete_food_item(delete_timestamp)
-        st.experimental_rerun()
+        st.rerun()
