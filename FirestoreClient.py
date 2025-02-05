@@ -178,7 +178,7 @@ class FirestoreClient:
             day = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
             
         # Reference Firestore
-        doc_ref = db.collection("users")\
+        doc_ref = self.db.collection("users")\
                 .document(user_id)\
                 .collection("foods")\
                 .document(day)\
