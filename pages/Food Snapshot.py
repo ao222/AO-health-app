@@ -36,5 +36,4 @@ with st.form(key='my_form'):
 
 # Handle form submission
 if clear_button:
-    st.write(f'Line number submitted: {line_number}')
-    # Add your clearing logic here, if needed
+    st.write(f'tiemstamp submitted: {food_today_df[line_number,1]}')
