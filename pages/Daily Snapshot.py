@@ -1,10 +1,11 @@
 import streamlit as st
 from datetime import datetime
 from FirestoreClient import FirestoreClient
+import util_time
 
 # Streamlit UI
 st.set_page_config(page_title="AO Health Tracker", page_icon="💙")
-formatted_date = datetime.now().strftime("%A, %B %-d, %Y")
+formatted_date = util_time.get_today_formatted()
 st.title("Daily Snapshot")
 st.subheader(formatted_date)
 
