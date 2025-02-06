@@ -40,3 +40,11 @@ def convert_to_local(timestamp, local_tz = TIMEZONE):
 
     # Return as string in ISO 8601 format
     return local_dt.isoformat()
+
+def get_today_formatted():  
+    # Get the current UTC time and convert it to local time
+    local_time = datetime.now().astimezone(TIMEZONE)
+    # Format the datetime as desired
+    formatted_time = local_time.strftime("%A, %B %-d, %Y")
+
+    return formatted_time
