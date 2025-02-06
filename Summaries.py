@@ -20,6 +20,9 @@ def main():
         start_timestamp = util_time.begin_day(start_date)
         end_timestamp = util_time.end_day(end_date)
         objective_df = db_client.get_objective_snapshots(start_timestamp,end_timestamp)
+
+        # add column of local timezones from UTC column
+        df["local_timestamp"] = df["timestamp"].apply(lambda x: util_time.convert_to_local(x))
         
         # Display results
         if objective_df is not None:
