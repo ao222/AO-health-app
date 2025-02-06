@@ -22,7 +22,7 @@ def main():
         objective_df = db_client.get_objective_snapshots(start_timestamp,end_timestamp)
 
         # add column of local timezones from UTC column
-        objective_df["local_timestamp"] = objective_df["timestamp"].apply(lambda x: util_time.convert_to_local(x))
+        objective_df["Local Timestamp"] = objective_df["Timestamp"].apply(lambda x: util_time.convert_to_local(x))
         
         # Display results
         if objective_df is not None:
