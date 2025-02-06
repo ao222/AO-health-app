@@ -20,3 +20,23 @@ def end_day(local_end_date):
     utc_time = local_bf_midnight.astimezone(ZoneInfo("UTC"))
     
     return utc_time
+
+def convert_to_local(timestamp, local_tz = TIMEZONE):
+    """
+    Converts a UTC timestamp string to local time.
+    
+    Args:
+        timestamp (str): The UTC timestamp.
+        local_tz (str): The target local timezone.
+        
+    Returns:
+        datetime: Converted local time.
+    """
+    # Convert string to datetime object and set UTC timezone
+    utc_dt = datetime.fromisoformat(timestamp).replace(tzinfo=ZoneInfo("UTC"))
+
+    # Convert to local timezone
+    local_dt = utc_dt.astimezone(ZoneInfo(local_tz))
+
+    # Return as string in ISO 8601 format
+    return local_dt.isoformat()
