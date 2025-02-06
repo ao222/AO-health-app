@@ -17,6 +17,6 @@ def get_end_today(local_end_date):
     local_bf_midnight = datetime.combine(local_end_date.date(), time.max, tzinfo=ZoneInfo(TIMEZONE))
     
     # Convert to UTC
-    utc_time = local_midnight.astimezone(ZoneInfo("UTC"))
+    utc_time = local_bf_midnight.astimezone(ZoneInfo("UTC"))
     
     return utc_time
