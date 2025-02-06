@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+import util_time
+
 
 #    credentials obtained through the streamlit community
 #    st secrets toml file. The toml file must have a [firebase]
@@ -93,7 +95,7 @@ class FirestoreClient:
 
     def save_daily_snapshot(self, sleep_hours, naps, walking_minutes, lifting_minutes, calories, caffeine):
         user_id = "user_123"
-        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+        today = util_time.get_today_timestamp()
         data = {
             "date": today,
             "sleep_hours": sleep_hours,
@@ -111,7 +113,7 @@ class FirestoreClient:
 
     def get_daily_snapshot(self):
         user_id = "user_123"
-        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+        today = util_time.get_today_timestamp()
     
         # Retrieve data from Firestore
         doc_ref = self.db.collection("users").document(user_id).collection("dailies").document(today)
