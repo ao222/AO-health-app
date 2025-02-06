@@ -12,7 +12,7 @@ def begin_day(local_start_date):
     
     return utc_time
 
-def get_end_today(local_end_date):
+def end_day(local_end_date):
     # Set time to one microsecond before midnight (23:59:59.999999)
     local_bf_midnight = datetime.combine(local_end_date, time.max, tzinfo=ZoneInfo(TIMEZONE))
     
