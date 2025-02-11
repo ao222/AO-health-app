@@ -47,7 +47,7 @@ class FirestoreClient:
 
     def save_food_snapshot(self, description, calories):
         user_id = "user_123"
-        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+        today = util_time.get_today_timestamp()
         timestamp = datetime.utcnow().isoformat()
         
         data = {
@@ -109,8 +109,6 @@ class FirestoreClient:
         # Save data to Firestore
         self.db.collection("users").document(user_id).collection("dailies").document(today).set(data)
 
-    from datetime import datetime
-
     def get_daily_snapshot(self):
         user_id = "user_123"
         today = util_time.get_today_timestamp()
@@ -148,7 +146,7 @@ class FirestoreClient:
             
     def get_today_food_snapshots(self):
         user_id = "user_123"
-        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+        today = util_time.get_today_timestamp()
 
         # Reference Firestore
         today_ref = self.db.collection("users").document(user_id).collection("foods").document(today).collection("snapshots")
@@ -177,7 +175,7 @@ class FirestoreClient:
 
         # if day is None set to today
         if day is None:
-            day = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+            day = util_time.get_today_timestamp()
             
         # Reference Firestore
         doc_ref = self.db.collection("users")\
