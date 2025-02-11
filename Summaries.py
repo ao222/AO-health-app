@@ -21,11 +21,10 @@ def main():
         end_timestamp = util_time.end_day(end_date)
         objective_df = db_client.get_objective_snapshots(start_timestamp,end_timestamp)
 
-        # add column of local timezones from UTC column
-        objective_df["Local Timestamp"] = objective_df["Timestamp"].apply(lambda x: util_time.convert_to_local(x))
-        
         # Display results
         if objective_df is not None:
+            # add column of local timezones from UTC column
+            objective_df["Local Timestamp"] = objective_df["Timestamp"].apply(lambda x: util_time.convert_to_local(x))
             st.dataframe(objective_df)
         else:
             st.write("No blood pressure data found in the selected range.")
