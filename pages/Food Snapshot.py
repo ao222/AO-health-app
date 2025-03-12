@@ -21,7 +21,9 @@ if submit_button:
     db_client.save_food_snapshot(description,calories)
     
 st.subheader("Today's Eats")
-food_today_df = db_client.get_today_food_snapshots()
+start_timestamp = util_time.begin_day(datetime.today())
+end_timestamp = util_time.end_day(datetime.today())
+food_today_df = db_client.get_food_snapshots(start_timestamp,end_timestamp)
 
 # Display results
 if food_today_df is not None:
