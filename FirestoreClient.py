@@ -214,3 +214,9 @@ class FirestoreClient:
             return df
         else:
             return None
+
+    def delete_food_item(self, timestamp):
+        user_id = "user_123"
+        
+        doc_ref = self.db.collection("users").document(user_id).collection("foods").document(timestamp)
+        doc_ref.delete()
