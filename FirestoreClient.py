@@ -156,8 +156,8 @@ class FirestoreClient:
         query = (
             food_snapshot_ref
             .order_by("__name__")  # Query based on document ID
-            .start_at([start_time_str])  # Start at documents created at or after start_time
-            .end_at([end_time_str])  # End at documents created at or before end_time
+            .start_at(start_time_str)  # Start at documents created at or after start_time
+            .end_at(end_time_str)  # End at documents created at or before end_time
         )
         
         # Execute query and fetch documents
