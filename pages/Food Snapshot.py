@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from FirestoreClient import FirestoreClient
 import util_time
-import datetime
+from datetime import datetime
 
 db_client = FirestoreClient()
 st.set_page_config(page_title="AO Health Tracker", page_icon="💙")
