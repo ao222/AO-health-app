@@ -47,7 +47,7 @@ class FirestoreClient:
 
     def save_food_snapshot(self, description, calories):
         user_id = "user_123"
-        today = util_time.get_today_timestamp()
+        # timestamp = util_time.now()
         timestamp = datetime.utcnow().isoformat()
         
         data = {
@@ -57,7 +57,7 @@ class FirestoreClient:
         }
 
         # Save data to Firestore
-        self.db.collection("users").document(user_id).collection("foods").document(today).collection("snapshots").document(timestamp).set(data)
+        self.db.collection("users").document(user_id).collection("foods").document(timestamp).set(data)
     
     def save_subjective_snapshot(self, motivation, restfulness, irritability, social_energy, levity, productivity, appetite, psychosis, depression, mania):
         user_id = "user_123"
@@ -144,15 +144,24 @@ class FirestoreClient:
         else:
             return None
             
-    def get_today_food_snapshots(self):
+    def get_food_snapshots(self,from_timestamp, to_timestamp):
         user_id = "user_123"
-        today = util_time.get_today_timestamp()
+        start_time_str = from_timestamp.isoformat()
+        end_time_str = to_timestamp.isoformat()
 
-        # Reference Firestore
-        today_ref = self.db.collection("users").document(user_id).collection("foods").document(today).collection("snapshots")
-
-        # Query
-        query = today_ref.get()
+        # Reference Firestore objectives collection
+        food_snapshot_ref = self.db.collection("users").document("user_123").collection("foods")
+        
+        # Query Firestore using document IDs (which are ISO formatted timestamps)
+        query = (
+            food_snapshot_ref
+            .order_by("__name__")  # Query based on document ID
+            .start_at([start_time_str])  # Start at documents created at or after start_time
+            .end_at([end_time_str])  # End at documents created at or before end_time
+        )
+        
+        # Execute query and fetch documents
+        docs = query.stream()
 
         # Process Results
         data = []
@@ -169,23 +178,6 @@ class FirestoreClient:
             return df
         else:
             return None
-
-    def delete_food_item(self, timestamp, day = None):
-        user_id = "user_123"
-
-        # if day is None set to today
-        if day is None:
-            day = util_time.get_today_timestamp()
-            
-        # Reference Firestore
-        doc_ref = self.db.collection("users")\
-                .document(user_id)\
-                .collection("foods")\
-                .document(day)\
-                .collection("snapshots")\
-                .document(timestamp)
-
-        doc_ref.delete()
         
     def get_objective_snapshots(self,from_timestamp, to_timestamp):
         start_time_str = from_timestamp.isoformat()
