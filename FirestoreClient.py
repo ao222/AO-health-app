@@ -165,7 +165,7 @@ class FirestoreClient:
 
         # Process Results
         data = []
-        for doc in query:
+        for doc in docs:
             doc_data = doc.to_dict()
             data.append({
                 "timestamp": doc_data.get("timestamp"),
