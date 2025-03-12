@@ -159,10 +159,17 @@ class FirestoreClient:
             .start_at(start_time_str)  # Start at documents created at or after start_time
             .end_at(end_time_str)  # End at documents created at or before end_time
         )
+
+        # debug code:
+        print(f"Querying Firestore from {start_time_str} to {end_time_str}")
         
         # Execute query and fetch documents
         docs = query.stream()
 
+        # Debugging: Check if the query result is empty
+        docs_list = list(docs)  # Convert iterator to list for debugging
+        print(f"Number of documents found: {len(docs_list)}")
+        
         # Process Results
         data = []
         for doc in docs:
