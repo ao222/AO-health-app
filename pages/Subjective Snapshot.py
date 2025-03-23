@@ -27,9 +27,7 @@ if submitted:
 
 # List todays objective snapshots for review
 st.subheader("Today's Snapshots")
-start = util_time.begin_today()
-end = util_time.end_today()
-today_df = db_client.get_subjective_snapshots(start,end)
+today_df = db_client.get_todays_subjectives()
 
 # Display results
 if today_df is not None:
