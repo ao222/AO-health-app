@@ -51,3 +51,7 @@ def get_today_formatted():
 
 def get_today_timestamp():
     return datetime.now(ZoneInfo(TIMEZONE)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+
+def get_now():
+    now = datetime.now(ZoneInfo(TIMEZONE))
+    return now.replace(tzinfo=None).isoformat()
