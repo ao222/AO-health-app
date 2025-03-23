@@ -24,4 +24,8 @@ start_timestamp = util_time.begin_day(datetime.today())
 end_timestamp = util_time.end_day(datetime.today())
 today_df = db_client.get_objective_snapshots(start_timestamp,end_timestamp)
 
-st.markdown(today_df.to_markdown())
+# Display results
+if today_df is not None:
+    st.markdown(today_df.to_markdown())
+else:
+    st.write("No snapshot data found for today.")
