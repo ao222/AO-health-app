@@ -121,28 +121,6 @@ class FirestoreClient:
         else:
             return None
 
-    def get_all_objective_snapshots(self):
-        objective_snapshot_ref = self.db.collection("users").document("user_123").collection("objectives")
-        query = objective_snapshot_ref.get()
-        
-        # Process results
-        data = []
-        for doc in query:
-            doc_data = doc.to_dict()
-            data.append({
-                "Systolic": doc_data.get("systolic"),
-                "Diastolic": doc_data.get("diastolic"),
-                "HeartRate": doc_data.get("heart_rate"),
-                "Glucose": doc_data.get("glucose"),
-                "Timestamp": doc_data.get("timestamp")
-            })
-
-        if data:
-            df = pd.DataFrame(data)
-            return df
-        else:
-            return None
-
     def get_todays_foods(self):
         start = util_time.begin_today()
         end = util_time.end_today()
