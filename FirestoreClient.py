@@ -47,8 +47,8 @@ class FirestoreClient:
 
     def save_food_snapshot(self, description, calories):
         user_id = "user_123"
-        # timestamp = util_time.now()
-        timestamp = datetime.utcnow().isoformat()
+        
+        timestamp = util_time.get_now()
         
         data = {
             "description": description,
