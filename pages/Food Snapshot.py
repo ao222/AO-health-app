@@ -29,22 +29,13 @@ food_today_df = db_client.get_food_snapshots(start_timestamp,end_timestamp)
 
 # Display results
 if food_today_df is not None:
-    st.markdown(food_today_df.to_markdown())
+    for index, row in food_today_df.iterrows():
+        col1, col2, col3 = st.columns([3, 1, 1])  # adjust layout
+        with col1:
+            st.markdown(f"**{row['food_name']}** – {row['calories']} kcal")
+        with col2:
+            if col2.button("Delete", key=f"delete_{row['timestamp']}"):
+                db_client.delete_food_item(row['timestamp'])
+                st.rerun()
 else:
     st.write("No food snapshot data found for today.")
-
-# Create a form for deleting a line item of food
-with st.form(key='my_form'):
-    line_number = st.number_input('Food Item', min_value=0, step=1)
-    clear_button = st.form_submit_button(label='Clear')
-
-# Handle form submission
-if clear_button:
-    try:
-        delete_timestamp = food_today_df.iloc[line_number, 0]
-    except IndexError:
-        delete_timestamp = None
-
-    if delete_timestamp is not None:
-        db_client.delete_food_item(delete_timestamp)
-        st.rerun()
