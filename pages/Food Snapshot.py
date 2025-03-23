@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from FirestoreClient import FirestoreClient
 import util_time
-from datetime import datetime
 
 db_client = FirestoreClient()
 st.set_page_config(page_title="AO Health Tracker", page_icon="💙")
@@ -23,9 +22,9 @@ if submit_button:
     db_client.save_food_snapshot(description,calories)
     
 st.subheader("Today's Eats")
-start_timestamp = util_time.begin_day(datetime.today())
-end_timestamp = util_time.end_day(datetime.today())
-food_today_df = db_client.get_food_snapshots(start_timestamp,end_timestamp)
+start = util_time.begin_today()
+end = util_time.end_today()
+food_today_df = db_client.get_food_snapshots(start,end)
 
 # Display results
 if food_today_df is not None:
