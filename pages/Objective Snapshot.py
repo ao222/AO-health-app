@@ -30,3 +30,16 @@ if today_df is not None:
     st.markdown(today_df.to_markdown())
 else:
     st.write("No snapshot data found for today.")
+
+# Display results
+if today_df is not None:
+    for index, row in today_df.iterrows():
+        col1, col2, col3 = st.columns([3, 1, 1])  # adjust layout
+        with col1:
+            st.markdown(f"**{row['systolic']} / {row['diastolic']} - hr: {row['heart_rate']} - glucose: {row['glucose']}**
+        with col2:
+            if col2.button("Delete", key=f"delete_{row['timestamp']}"):
+                # db_client.delete_food_item(row['timestamp'])
+                st.rerun()
+else:
+    st.write("No food snapshot data found for today.")
