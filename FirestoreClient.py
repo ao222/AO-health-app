@@ -177,6 +177,11 @@ class FirestoreClient:
             return df
         else:
             return None
+    
+    def get_todays_objectives(self):
+        start = util_time.begin_today()
+        end = util_time.end_today()
+        return self.get_objective_snapshots(start,end)
         
     def get_objective_snapshots(self,from_timestamp, to_timestamp):
         start_time_str = from_timestamp.isoformat()
