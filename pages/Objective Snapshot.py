@@ -1,6 +1,5 @@
 import streamlit as st
 from FirestoreClient import FirestoreClient
-from datetime import datetime
 import util_time
 
 db_client = FirestoreClient()
@@ -21,9 +20,9 @@ if submit:
 
 # List todays objective snapshots for review
 st.subheader("Today's Snapshots")
-start_timestamp = util_time.begin_day(datetime.today())
-end_timestamp = util_time.end_day(datetime.today())
-today_df = db_client.get_objective_snapshots(start_timestamp,end_timestamp)
+begin = util_time.begin_today()
+end = util_time.end_today()
+today_df = db_client.get_objective_snapshots(begin,end)
 
 # Display results
 if today_df is not None:
