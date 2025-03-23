@@ -144,7 +144,7 @@ class FirestoreClient:
         else:
             return None
 
-     def get_todays_foods(self):
+    def get_todays_foods(self):
         start = util_time.begin_today()
         end = util_time.end_today()
         return self.get_food_snapshots(start,end)
