@@ -143,7 +143,12 @@ class FirestoreClient:
             return df
         else:
             return None
-            
+
+     def get_todays_foods(self):
+        start = util_time.begin_today()
+        end = util_time.end_today()
+        return self.get_food_snapshots(start,end)
+         
     def get_food_snapshots(self,from_timestamp, to_timestamp):
         user_id = "user_123"
         start_time_str = from_timestamp.replace(tzinfo=None).isoformat(timespec="microseconds")
