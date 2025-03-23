@@ -57,7 +57,3 @@ if today_df is not None:
                 st.rerun()
 else:
     st.write("No snapshot data found for today.")
-
-
-# list of items:
-f"**Motivation-{row['motivation']} | Restfulness-{row['restfulness']} | Irritability-{row['irritability']} | Social Energy-{row['social_energy']} | Levity-{row['levity']} | Productivity-{row['productivity']} | Appetite-{row['appetite']} | Psychosis-{row['psychosis']} | Depression-{row['depression']} | Mania-{row['mania'] @ {time}**"
