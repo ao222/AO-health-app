@@ -36,7 +36,7 @@ if today_df is not None:
     for index, row in today_df.iterrows():
         col1, col2, col3 = st.columns([3, 1, 1])  # adjust layout
         with col1:
-            st.markdown(f"**{row['systolic']} / {row['diastolic']} - hr: {row['heart_rate']} - glucose: {row['glucose']}**
+            st.markdown(f"**{row['systolic']} / {row['diastolic']} - hr: {row['heart_rate']} - glucose: {row['glucose']}**")
         with col2:
             if col2.button("Delete", key=f"delete_{row['timestamp']}"):
                 # db_client.delete_food_item(row['timestamp'])
