@@ -1,7 +1,6 @@
 import streamlit as st
 from FirestoreClient import FirestoreClient
 import util_time
-from datetime import datetime
 
 db_client = FirestoreClient()
 st.set_page_config(page_title="AO Health Tracker", page_icon="💙")
@@ -28,9 +27,9 @@ if submitted:
 
 # List todays objective snapshots for review
 st.subheader("Today's Snapshots")
-start_timestamp = util_time.begin_day(datetime.today())
-end_timestamp = util_time.end_day(datetime.today())
-today_df = db_client.get_subjective_snapshots(start_timestamp,end_timestamp)
+start = util_time.begin_today()
+end = util_time.end_today()
+today_df = db_client.get_subjective_snapshots(start,end)
 
 # Display results
 if today_df is not None:
