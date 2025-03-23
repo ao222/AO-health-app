@@ -20,9 +20,7 @@ if submit:
 
 # List todays objective snapshots for review
 st.subheader("Today's Snapshots")
-begin = util_time.begin_today()
-end = util_time.end_today()
-today_df = db_client.get_objective_snapshots(begin,end)
+today_df = db_client.get_todays_objectives()
 
 # Display results
 if today_df is not None:
