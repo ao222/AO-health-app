@@ -39,3 +39,6 @@ def get_today_formatted():
     formatted_time = local_time.strftime("%A, %B %-d, %Y")
 
     return formatted_time
+
+def get_today_timestamp():
+    return datetime.now(ZoneInfo(TIMEZONE)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
