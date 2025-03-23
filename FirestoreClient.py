@@ -214,6 +214,48 @@ class FirestoreClient:
         else:
             return None
 
+    def get_subjective_snapshots(self, from_timestamp, to_timestamp)
+        start_time_str = from_timestamp.isoformat()
+        end_time_str = to_timestamp.isoformat()
+
+        # Reference Firestore subjectives collection
+        subjective_snapshot_ref = self.db.collection("users").document("user_123").collection("subjectives")
+        
+        # Query Firestore using document IDs (which are ISO formatted timestamps)
+        query = (
+            subjective_snapshot_ref
+            .order_by("__name__")  # Query based on document ID
+            .start_at([start_time_str])  # Start at documents created at or after start_time
+            .end_at([end_time_str])  # End at documents created at or before end_time
+        )
+        
+        # Execute query and fetch documents
+        docs = query.stream()
+        
+        # Process results
+        data = []
+        for doc in docs:
+            doc_data = doc.to_dict()
+            data.append({
+                "motivation": doc_data.get("motivation"),
+                "restfulness": doc_data.get("restfulness"),
+                "irritability": doc_data.get("irritability"),
+                "social_energy": doc_data.get("social_energy"),
+                "levity": doc_data.get("levity"),
+                "productivity": doc_data.get("productivity"),
+                "appetite": doc_data.get("appetite"),
+                "psychosis": doc_data.get("psychosis"),
+                "depression": doc_data.get("depression"),
+                "mania": doc_data.get("mania"),
+                "timestamp": doc_data.get("timestamp")
+            })
+
+        if data:
+            df = pd.DataFrame(data)
+            return df
+        else:
+            return None
+            
     def delete_food_item(self, timestamp):
         user_id = "user_123"
         
@@ -224,4 +266,10 @@ class FirestoreClient:
         user_id = "user_123"
 
         doc_ref = self.db.collection("users").document(user_id).collection("objectives").document(timestamp)
+        doc_ref.delete()
+
+    def delete_subjective_snapshot(self, timestamp):
+        user_id = "user_123"
+
+        doc_ref = self.db.collection("users").document(user_id).collection("subjectives").document(timestamp)
         doc_ref.delete()
