@@ -124,9 +124,9 @@ class FirestoreClient:
     def get_todays_foods(self):
         start = util_time.begin_today()
         end = util_time.end_today()
-        return self.get_food_snapshots(start,end)
+        return self._get_food_snapshots(start,end)
          
-    def get_food_snapshots(self,from_timestamp, to_timestamp):
+    def _get_food_snapshots(self,from_timestamp, to_timestamp):
         user_id = "user_123"
         start_time_str = from_timestamp.replace(tzinfo=None).isoformat(timespec="microseconds")
         end_time_str = to_timestamp.replace(tzinfo=None).isoformat(timespec="microseconds")
@@ -163,9 +163,9 @@ class FirestoreClient:
     def get_todays_objectives(self):
         start = util_time.begin_today()
         end = util_time.end_today()
-        return self.get_objective_snapshots(start,end)
+        return self._get_objective_snapshots(start,end)
         
-    def get_objective_snapshots(self,from_timestamp, to_timestamp):
+    def _get_objective_snapshots(self,from_timestamp, to_timestamp):
         start_time_str = from_timestamp.isoformat()
         end_time_str = to_timestamp.isoformat()
 
@@ -204,9 +204,9 @@ class FirestoreClient:
     def get_todays_subjectives(self):
         start = util_time.begin_today()
         end = util_time.end_today()
-        return self.get_subjective_snapshots(start,end)
+        return self._get_subjective_snapshots(start,end)
 
-    def get_subjective_snapshots(self, from_timestamp, to_timestamp):
+    def _get_subjective_snapshots(self, from_timestamp, to_timestamp):
         start_time_str = from_timestamp.isoformat()
         end_time_str = to_timestamp.isoformat()
 
