@@ -201,11 +201,11 @@ class FirestoreClient:
         for doc in docs:
             doc_data = doc.to_dict()
             data.append({
-                "Systolic": doc_data.get("systolic"),
-                "Diastolic": doc_data.get("diastolic"),
-                "HeartRate": doc_data.get("heart_rate"),
-                "Glucose": doc_data.get("glucose"),
-                "Timestamp": doc_data.get("timestamp")
+                "systolic": doc_data.get("systolic"),
+                "diastolic": doc_data.get("diastolic"),
+                "heart_rate": doc_data.get("heart_rate"),
+                "glucose": doc_data.get("glucose"),
+                "timestamp": doc_data.get("timestamp")
             })
 
         if data:
