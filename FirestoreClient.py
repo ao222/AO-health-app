@@ -146,8 +146,8 @@ class FirestoreClient:
             
     def get_food_snapshots(self,from_timestamp, to_timestamp):
         user_id = "user_123"
-        start_time_str = from_timestamp.replace(tzinfo=None).isoformat()
-        end_time_str = to_timestamp.replace(tzinfo=None).isoformat()
+        start_time_str = from_timestamp.replace(tzinfo=None).isoformat(timespec="microseconds")
+        end_time_str = to_timestamp.replace(tzinfo=None).isoformat(timespec="microseconds")
         
         # Reference Firestore objectives collection
         food_snapshot_ref = self.db.collection("users").document("user_123").collection("foods")
