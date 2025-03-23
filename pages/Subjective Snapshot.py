@@ -38,11 +38,26 @@ if today_df is not None:
         col1, col2, col3 = st.columns([3, 1, 1])  # adjust layout
         with col1:
             time = util_time.get_time(row['timestamp'])
-            # st.markdown(f"**{row['systolic']} / {row['diastolic']} - hr: {row['heart_rate']} - glucose: {row['glucose']} @ {time}**")
-            st.markdown(f"** @ {time}**")
+            formatted_string = (
+                f"**Motivation-{row['motivation']} | "
+                f"Restfulness-{row['restfulness']} | "
+                f"Irritability-{row['irritability']} | "
+                f"Social Energy-{row['social_energy']} | "
+                f"Levity-{row['levity']} | "
+                f"Productivity-{row['productivity']} | "
+                f"Appetite-{row['appetite']} | "
+                f"Psychosis-{row['psychosis']} | "
+                f"Depression-{row['depression']} | "
+                f"Mania-{row['mania']} @ {time}**"
+            )
+            # st.markdown(formatted_string)
         with col2:
             if col2.button("Delete", key=f"delete_{row['timestamp']}"):
                 db_client.delete_subjective_snapshot(row['timestamp'])
                 st.rerun()
 else:
     st.write("No snapshot data found for today.")
+
+
+# list of items:
+f"**Motivation-{row['motivation']} | Restfulness-{row['restfulness']} | Irritability-{row['irritability']} | Social Energy-{row['social_energy']} | Levity-{row['levity']} | Productivity-{row['productivity']} | Appetite-{row['appetite']} | Psychosis-{row['psychosis']} | Depression-{row['depression']} | Mania-{row['mania'] @ {time}**"
