@@ -153,12 +153,10 @@ class FirestoreClient:
         food_snapshot_ref = self.db.collection("users").document("user_123").collection("foods")
         print(start_time_str)
         print(end_time_str)
-        # Query Firestore using document IDs (which are ISO formatted timestamps)
         query = (
             food_snapshot_ref
-            .order_by("__name__")  # Query based on document ID
-            .start_at(start_time_str)  # Start at documents created at or after start_time
-            .end_at(end_time_str)  # End at documents created at or before end_time
+            .where("timestamp", ">=", start_time_str)
+            .where("timestamp", "<=", end_time_str))
         )
         
         # Execute query and fetch documents
