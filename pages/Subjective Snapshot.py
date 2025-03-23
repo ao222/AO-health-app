@@ -50,7 +50,7 @@ if today_df is not None:
                 f"Depression-{row['depression']} | "
                 f"Mania-{row['mania']} @ {time}**"
             )
-            # st.markdown(formatted_string)
+            st.markdown(formatted_string)
         with col2:
             if col2.button("Delete", key=f"delete_{row['timestamp']}"):
                 db_client.delete_subjective_snapshot(row['timestamp'])
