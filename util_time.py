@@ -4,10 +4,10 @@ from zoneinfo import ZoneInfo
 TIMEZONE = "America/Chicago"
 
 def begin_today():
-    return begin_day(get_now())
+    return begin_day(datetime.now(ZoneInfo(TIMEZONE)))
 
 def end_today():
-    return end_day(get_now())
+    return end_day(datetime.now(ZoneInfo(TIMEZONE)))
     
 def begin_day(local_start_date):
     # Set time to midnight (00:00:00)
