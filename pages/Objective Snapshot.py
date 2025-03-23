@@ -37,4 +37,4 @@ if today_df is not None:
                 db_client.delete_objective_snapshot(row['timestamp'])
                 st.rerun()
 else:
-    st.write("No food snapshot data found for today.")
+    st.write("No snapshot data found for today.")
