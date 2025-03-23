@@ -8,7 +8,7 @@ def begin_day(local_start_date):
     local_midnight = datetime.combine(local_start_date, time.min, tzinfo=ZoneInfo(TIMEZONE))
     
     # Convert to UTC
-    utc_time = local_midnight.astimezone(ZoneInfo("UTC"))
+    utc_time = local_midnight
     
     return utc_time
 
@@ -17,7 +17,7 @@ def end_day(local_end_date):
     local_bf_midnight = datetime.combine(local_end_date, time.max, tzinfo=ZoneInfo(TIMEZONE))
     
     # Convert to UTC
-    utc_time = local_bf_midnight.astimezone(ZoneInfo("UTC"))
+    utc_time = local_bf_midnight
     
     return utc_time
 
