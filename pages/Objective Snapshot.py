@@ -1,5 +1,6 @@
 import streamlit as st
 from FirestoreClient import FirestoreClient
+from datetime import datetime
 
 db_client = FirestoreClient()
 st.set_page_config(page_title="AO Health Tracker", page_icon="💙")
@@ -16,4 +17,11 @@ with st.form("health_form"):
 
 if submit:
     db_client.save_objective_snapshot(systolic,diastolic,heart_rate,glucose)
-    st.success("Data successfully saved!")
+
+# List todays objective snapshots for review
+st.subheader("Today's Snapshots")
+start_timestamp = util_time.begin_day(datetime.today())
+end_timestamp = util_time.end_day(datetime.today())
+today_df = db_client.get_objective_snapshots(start_timestamp,end_timestamp)
+
+st.markdown(today_df.to_markdown())
