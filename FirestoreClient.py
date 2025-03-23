@@ -214,7 +214,7 @@ class FirestoreClient:
         else:
             return None
 
-    def get_subjective_snapshots(self, from_timestamp, to_timestamp)
+    def get_subjective_snapshots(self, from_timestamp, to_timestamp):
         start_time_str = from_timestamp.isoformat()
         end_time_str = to_timestamp.isoformat()
 
