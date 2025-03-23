@@ -55,3 +55,10 @@ def get_today_timestamp():
 def get_now():
     now = datetime.now(ZoneInfo(TIMEZONE))
     return now.replace(tzinfo=None).isoformat()
+
+def get_time(timestamp_str):
+    # returns the time in AM/PM format
+    # from an iso timestamp string
+    
+    dt = datetime.fromisoformat(timestamp_str)
+    return dt.strftime("%I:%M %p")
