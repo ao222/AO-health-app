@@ -3,6 +3,12 @@ from zoneinfo import ZoneInfo
 
 TIMEZONE = "America/Chicago"
 
+def begin_today():
+    return begin_day(get_now())
+
+def end_today():
+    return end_day(get_now())
+    
 def begin_day(local_start_date):
     # Set time to midnight (00:00:00)
     local_midnight = datetime.combine(local_start_date, time.min, tzinfo=ZoneInfo(TIMEZONE))
