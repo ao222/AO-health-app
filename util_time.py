@@ -31,3 +31,11 @@ def get_time(timestamp_str):
     
     dt = datetime.fromisoformat(timestamp_str)
     return dt.strftime("%I:%M %p")
+    
+def get_today_formatted():  
+    # Get the current local time
+    local_time = datetime.now(ZoneInfo(TIMEZONE))
+    # Format the datetime as desired
+    formatted_time = local_time.strftime("%A, %B %-d, %Y")
+
+    return formatted_time
