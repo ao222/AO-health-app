@@ -22,7 +22,7 @@ if submit_button:
     db_client.save_food_snapshot(description,calories)
     
 st.subheader("Today's Eats")
-food_today_df = db_client.get_todays_food()
+food_today_df = db_client.get_todays_foods()
 
 # Display results
 if food_today_df is not None:
