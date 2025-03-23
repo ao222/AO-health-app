@@ -219,3 +219,9 @@ class FirestoreClient:
         
         doc_ref = self.db.collection("users").document(user_id).collection("foods").document(timestamp)
         doc_ref.delete()
+
+    def delete_objective_snapshot(self, timestamp):
+        user_id = "user_123"
+
+        doc_ref = self.db.collection("users").document(user_id).collection("objectives").document(timestamp)
+        doc_ref.delete()
