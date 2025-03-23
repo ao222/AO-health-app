@@ -156,7 +156,7 @@ class FirestoreClient:
         query = (
             food_snapshot_ref
             .where("timestamp", ">=", start_time_str)
-            .where("timestamp", "<=", end_time_str))
+            .where("timestamp", "<=", end_time_str)
         )
         
         # Execute query and fetch documents
