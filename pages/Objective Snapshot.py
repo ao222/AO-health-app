@@ -27,12 +27,6 @@ today_df = db_client.get_objective_snapshots(start_timestamp,end_timestamp)
 
 # Display results
 if today_df is not None:
-    st.markdown(today_df.to_markdown())
-else:
-    st.write("No snapshot data found for today.")
-
-# Display results
-if today_df is not None:
     for index, row in today_df.iterrows():
         col1, col2, col3 = st.columns([3, 1, 1])  # adjust layout
         with col1:
