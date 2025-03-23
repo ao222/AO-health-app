@@ -21,37 +21,6 @@ def end_day(local_end_date):
     
     return utc_time
 
-def convert_to_local(timestamp, local_tz = TIMEZONE):
-    """
-    Converts a UTC timestamp string to local time.
-    
-    Args:
-        timestamp (str): The UTC timestamp.
-        local_tz (str): The target local timezone.
-        
-    Returns:
-        datetime: Converted local time.
-    """
-    # Convert string to datetime object and set UTC timezone
-    utc_dt = datetime.fromisoformat(timestamp).replace(tzinfo=ZoneInfo("UTC"))
-
-    # Convert to local timezone
-    local_dt = utc_dt.astimezone(ZoneInfo(local_tz))
-
-    # Return as string in ISO 8601 format
-    return local_dt.isoformat()
-
-def get_today_formatted():  
-    # Get the current UTC time and convert it to local time
-    local_time = datetime.now(ZoneInfo(TIMEZONE))
-    # Format the datetime as desired
-    formatted_time = local_time.strftime("%A, %B %-d, %Y")
-
-    return formatted_time
-
-def get_today_timestamp():
-    return datetime.now(ZoneInfo(TIMEZONE)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
-
 def get_now():
     now = datetime.now(ZoneInfo(TIMEZONE))
     return now.replace(tzinfo=None).isoformat()
