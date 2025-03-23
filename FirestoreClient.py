@@ -151,7 +151,8 @@ class FirestoreClient:
 
         # Reference Firestore objectives collection
         food_snapshot_ref = self.db.collection("users").document("user_123").collection("foods")
-        
+        print(start_time_str)
+        print(end_time_str)
         # Query Firestore using document IDs (which are ISO formatted timestamps)
         query = (
             food_snapshot_ref
