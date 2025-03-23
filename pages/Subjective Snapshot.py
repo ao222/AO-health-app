@@ -1,5 +1,7 @@
 import streamlit as st
 from FirestoreClient import FirestoreClient
+import util_time
+from datetime import datetime
 
 db_client = FirestoreClient()
 st.set_page_config(page_title="AO Health Tracker", page_icon="💙")
@@ -21,6 +23,26 @@ with st.form("subjective_snapshots_form"):
     
     submitted = st.form_submit_button("Submit")
     
-    if submitted:
-        db_client.save_subjective_snapshot(motivation, restfulness, irritability, social_energy, levity, productivity, appetite, psychosis, depression, mania)
-        st.success("Data saved successfully!")
+if submitted:
+    db_client.save_subjective_snapshot(motivation, restfulness, irritability, social_energy, levity, productivity, appetite, psychosis, depression, mania)
+
+# List todays objective snapshots for review
+st.subheader("Today's Snapshots")
+start_timestamp = util_time.begin_day(datetime.today())
+end_timestamp = util_time.end_day(datetime.today())
+today_df = db_client.get_subjective_snapshots(start_timestamp,end_timestamp)
+
+# Display results
+if today_df is not None:
+    for index, row in today_df.iterrows():
+        col1, col2, col3 = st.columns([3, 1, 1])  # adjust layout
+        with col1:
+            time = util_time.get_time(row['timestamp'])
+            # st.markdown(f"**{row['systolic']} / {row['diastolic']} - hr: {row['heart_rate']} - glucose: {row['glucose']} @ {time}**")
+            st.markdown(f"** @ {time}**")
+        with col2:
+            if col2.button("Delete", key=f"delete_{row['timestamp']}"):
+                db_client.delete_subjective_snapshot(row['timestamp'])
+                st.rerun()
+else:
+    st.write("No snapshot data found for today.")
